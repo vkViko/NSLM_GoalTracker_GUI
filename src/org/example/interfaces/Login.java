@@ -1,18 +1,17 @@
 package org.example.interfaces;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
-
 import javax.swing.ImageIcon;
-import javax.swing.JTextField;
 
 /**
  *
  * @author vicen
  */
-public class Login extends javax.swing.JFrame{
+public class Login extends javax.swing.JFrame {
 
     /**
      * Creates new form Lgin
@@ -20,15 +19,14 @@ public class Login extends javax.swing.JFrame{
     public Login() {
         initComponents();
         this.configInicial();
-        
+
     }
-    
-    public void configInicial(){
+
+    public void configInicial() {
         setLocationRelativeTo(null);
         setTitle("NSLM GoalTracker");
         setIconImage(new ImageIcon(getClass().getResource("images/icono.png")).getImage());
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -106,12 +104,12 @@ public class Login extends javax.swing.JFrame{
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(panelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(panelBackground, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -149,7 +147,7 @@ public class Login extends javax.swing.JFrame{
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Login().setVisible(true);
-                
+
             }
         });
     }
