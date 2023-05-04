@@ -1,20 +1,28 @@
 package org.example.interfaces;
 
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author vicen
  */
 public class Login extends javax.swing.JFrame {
-    String url;
-    String user;
-    String passwd;
+
+    static final String url = "jdbc:mysql://localhost:3306/users";
+    static final String user = "root";
+    static final String passwd = "";
+
+    static Connection c;
+    static Statement s;
+    static ResultSet r;
 
     /**
      * Creates new form Log1n
@@ -23,8 +31,8 @@ public class Login extends javax.swing.JFrame {
         initComponents();
         configInicial();
     }
-    
-    public void configInicial(){
+
+    public void configInicial() {
         setLocationRelativeTo(null);
         setTitle("NSLM GoalTracker");
         setIconImage(new ImageIcon(getClass().getResource("images/icono.png")).getImage());
@@ -47,10 +55,9 @@ public class Login extends javax.swing.JFrame {
         lblIcono2 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         txtFieldUser = new LIB.JTexfieldPH_FielTex();
-        cbRecuerdame = new javax.swing.JCheckBox();
-        jLabel1 = new javax.swing.JLabel();
         lblCrearCuenta = new javax.swing.JLabel();
         txtFieldPasswd = new LIB.JTexfieldPH_Password();
+        btnLogin = new javax.swing.JButton();
         lblRayo = new javax.swing.JLabel();
         lblFondo = new javax.swing.JLabel();
 
@@ -89,20 +96,7 @@ public class Login extends javax.swing.JFrame {
         txtFieldUser.setPlaceholder("Usuario");
         panelLogin.add(txtFieldUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, -1, 30));
 
-        cbRecuerdame.setBackground(new java.awt.Color(255, 255, 255));
-        cbRecuerdame.setForeground(new java.awt.Color(0, 0, 0));
-        cbRecuerdame.setText("¡Recuerdame!");
-        cbRecuerdame.setOpaque(true);
-        panelLogin.add(cbRecuerdame, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 230, -1, 20));
-
-        jLabel1.setBackground(new java.awt.Color(102, 204, 0));
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("                                      LOGIN");
-        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jLabel1.setOpaque(true);
-        panelLogin.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 290, 40));
-
-        lblCrearCuenta.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 8)); // NOI18N
+        lblCrearCuenta.setFont(new java.awt.Font("MS Reference Sans Serif", 0, 10)); // NOI18N
         lblCrearCuenta.setForeground(new java.awt.Color(0, 0, 0));
         lblCrearCuenta.setText("¿No tienes cuenta?");
         lblCrearCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -110,12 +104,22 @@ public class Login extends javax.swing.JFrame {
                 lblCrearCuentaMouseClicked(evt);
             }
         });
-        panelLogin.add(lblCrearCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 90, 40));
+        panelLogin.add(lblCrearCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 110, 40));
 
         txtFieldPasswd.setBackground(new java.awt.Color(255, 255, 255));
         txtFieldPasswd.setBorder(null);
         txtFieldPasswd.setPlaceholder("Contraseña");
         panelLogin.add(txtFieldPasswd, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, -1, -1));
+
+        btnLogin.setBackground(new java.awt.Color(153, 255, 153));
+        btnLogin.setForeground(new java.awt.Color(0, 0, 0));
+        btnLogin.setText("LOGIN");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+        panelLogin.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 290, 40));
 
         panelFondo.add(panelLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 350, 330));
 
@@ -144,6 +148,29 @@ public class Login extends javax.swing.JFrame {
         new CrearCuenta().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_lblCrearCuentaMouseClicked
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        try {
+            c = DriverManager.getConnection(url, user, passwd);
+            s = c.createStatement();
+
+            r = s.executeQuery("SELECT * FROM usuario WHERE nombre = '" + txtFieldUser.getText() + "'");
+            r.next();
+
+            try {
+                r.getString("password").equals(txtFieldPasswd.getText());
+                this.setVisible(false);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(rootPane, "Verifique su usuario/contraseña.");
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(rootPane, "Usuario no encontrado");
+        }
+
+        IndexClasificacion ic = new IndexClasificacion();
+        ic.setVisible(true);
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,8 +209,7 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JCheckBox cbRecuerdame;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnLogin;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblCrearCuenta;

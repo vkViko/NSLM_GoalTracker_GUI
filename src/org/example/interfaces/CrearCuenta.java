@@ -4,7 +4,17 @@
  */
 package org.example.interfaces;
 
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import static org.example.interfaces.Login.c;
+import static org.example.interfaces.Login.passwd;
+import static org.example.interfaces.Login.s;
+import static org.example.interfaces.Login.url;
+import static org.example.interfaces.Login.user;
 
 /**
  *
@@ -35,75 +45,74 @@ public class CrearCuenta extends javax.swing.JFrame {
     private void initComponents() {
 
         panelPrincipal = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        txtFieldUser = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        txtFiedlPasswd = new javax.swing.JTextField();
         btnCrearCuenta = new javax.swing.JButton();
+        lblIcono1 = new javax.swing.JLabel();
+        txtFieldUser = new LIB.JTexfieldPH_FielTex();
+        jSeparator1 = new javax.swing.JSeparator();
+        lblIcono2 = new javax.swing.JLabel();
+        txtFieldPasswd = new LIB.JTexfieldPH_Password();
+        jSeparator2 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel2.setText("Nombre de usuario:");
+        panelPrincipal.setBackground(new java.awt.Color(255, 255, 255));
+        panelPrincipal.setForeground(new java.awt.Color(255, 255, 255));
+        panelPrincipal.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel3.setText("Contraseña:");
-
+        btnCrearCuenta.setBackground(new java.awt.Color(255, 255, 255));
         btnCrearCuenta.setFont(new java.awt.Font("Arial monospaced for SAP", 0, 18)); // NOI18N
+        btnCrearCuenta.setForeground(new java.awt.Color(0, 0, 0));
         btnCrearCuenta.setText("Crear cuenta");
+        btnCrearCuenta.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnCrearCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearCuentaActionPerformed(evt);
+            }
+        });
+        panelPrincipal.add(btnCrearCuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, 250, 40));
 
-        javax.swing.GroupLayout panelPrincipalLayout = new javax.swing.GroupLayout(panelPrincipal);
-        panelPrincipal.setLayout(panelPrincipalLayout);
-        panelPrincipalLayout.setHorizontalGroup(
-            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtFieldUser, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtFiedlPasswd, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(32, Short.MAX_VALUE))
-        );
-        panelPrincipalLayout.setVerticalGroup(
-            panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPrincipalLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel2))
-                    .addComponent(txtFieldUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addGroup(panelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelPrincipalLayout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jLabel3))
-                    .addComponent(txtFiedlPasswd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(47, 47, 47)
-                .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(38, Short.MAX_VALUE))
-        );
+        lblIcono1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/example/interfaces/images/iconoUser.png"))); // NOI18N
+        panelPrincipal.add(lblIcono1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 40, 60));
+
+        txtFieldUser.setBackground(new java.awt.Color(255, 255, 255));
+        txtFieldUser.setBorder(null);
+        txtFieldUser.setPlaceholder("Usuario");
+        panelPrincipal.add(txtFieldUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, -1, 30));
+        panelPrincipal.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 210, 20));
+
+        lblIcono2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/org/example/interfaces/images/iconPasswd.png"))); // NOI18N
+        panelPrincipal.add(lblIcono2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 30, 40));
+
+        txtFieldPasswd.setBackground(new java.awt.Color(255, 255, 255));
+        txtFieldPasswd.setBorder(null);
+        txtFieldPasswd.setPlaceholder("Contraseña");
+        panelPrincipal.add(txtFieldPasswd, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, -1, 30));
+        panelPrincipal.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 210, 10));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
+        try {
+            c = DriverManager.getConnection(url, user, passwd);
+            s = c.createStatement();
+            s.executeUpdate("INSERT INTO usuario VALUES(null,'"+ txtFieldUser.getText()+ "','"+txtFieldPasswd.getText()+"')");
+            JOptionPane.showMessageDialog(rootPane,"Usuario creado");
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnCrearCuentaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -142,10 +151,12 @@ public class CrearCuenta extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearCuenta;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JLabel lblIcono1;
+    private javax.swing.JLabel lblIcono2;
     private javax.swing.JPanel panelPrincipal;
-    private javax.swing.JTextField txtFiedlPasswd;
-    private javax.swing.JTextField txtFieldUser;
+    private LIB.JTexfieldPH_Password txtFieldPasswd;
+    private LIB.JTexfieldPH_FielTex txtFieldUser;
     // End of variables declaration//GEN-END:variables
 }
